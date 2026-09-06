@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+  <body>
+    <div class="standings-search standings-search--female">
+      <table>
+        <thead>
+          <tr><th>Rank</th><th>Athlete</th><th>Country</th><th>Points</th><th>Change</th></tr>
+        </thead>
+        <tbody>
+          <tr class="athlete-row">
+            <td class="views-field-rank">1</td>
+            <td class="views-field-name">
+              <a href="/proseries/triathletes/jane-doe">Jane Doe</a>
+              <a class="toggle-points" data-athlete-nid="12345" href="#">points</a>
+            </td>
+            <td class="views-field-country">
+              <span class="country-flag-formatter"><img src="/sites/default/files/flags/us.svg" alt="United States"></span>
+            </td>
+            <td class="views-field-points">15,000</td>
+            <td class="views-field-change">
+              <span class="rank-change rank-change--up"><span class="number">2</span></span>
+            </td>
+          </tr>
+          <tr class="points-breakdown">
+            <td colspan="5">breakdown details that must be ignored</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="standings-search standings-search--male">
+      <table><tbody></tbody></table>
+    </div>
+
+    <!-- The cols-7 race table: winner columns are the meaningless
+         "views-field-nothing*"; the title cell links to /proseries/races/<slug>. -->
+    <table class="cols-7">
+      <thead>
+        <tr>
+          <th class="views-field views-field-title">Title</th>
+          <th class="views-field views-field-event-date">Date</th>
+          <th class="views-field views-field-nothing">Winner Women</th>
+          <th class="views-field views-field-nothing-1">Time</th>
+          <th class="views-field views-field-nothing-2">Winner Men</th>
+          <th class="views-field views-field-nothing-3">Time</th>
+          <th class="views-field views-field-field-points">Points</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="views-field views-field-title">
+            <a href="/proseries/races/im-new-zealand"><span class="event-title">ANZCO Foods<br>IRONMAN New Zealand</span></a>
+          </td>
+          <td class="views-field views-field-event-date">March 7, 2026</td>
+          <td class="views-field views-field-nothing"></td>
+          <td class="views-field views-field-nothing-1"></td>
+          <td class="views-field views-field-nothing-2"></td>
+          <td class="views-field views-field-nothing-3"></td>
+          <td class="views-field views-field-field-points">5,000</td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

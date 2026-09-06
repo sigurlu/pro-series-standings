@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ironman-pro-standings-backend"
+version = "0.1.0"
+license = "MIT"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi",
+    "uvicorn[standard]",
+    "sqlalchemy>=2",
+    "psycopg[binary]",
+    "alembic",
+    "pydantic-settings",
+    "httpx",
+    "beautifulsoup4",
+    "lxml",
+    "pytest",
+]
+
+[tool.setuptools]
+packages = ["app", "app.scrape"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
