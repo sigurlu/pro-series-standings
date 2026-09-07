@@ -687,4 +687,23 @@ tr.counts td {
   .page-head h1 {
     font-size: 1.45rem;
   }
+
+  /* tighten the standings table so Ceiling + Behind fit without scrolling */
+  table {
+    font-size: 0.85rem;
+  }
+  thead th,
+  tbody td {
+    padding: 0.55rem 0.55rem;
+  }
+  .athlete-cell .name {
+    display: block;
+    max-width: 10rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .meter {
+    min-width: 64px;
+  }
 }

@@ -126,12 +126,6 @@ export default async function StandingsPage({
                   <th className="col-rank">#</th>
                   <th>Athlete</th>
                   <SortHeader
-                    label="Current"
-                    col="current"
-                    gender={gender}
-                    active={sort === "current"}
-                  />
-                  <SortHeader
                     label="Ceiling"
                     col="ceiling"
                     gender={gender}
@@ -145,6 +139,12 @@ export default async function StandingsPage({
                       </span>
                     </Tooltip>
                   </th>
+                  <SortHeader
+                    label="Current"
+                    col="current"
+                    gender={gender}
+                    active={sort === "current"}
+                  />
                   <th className="num">
                     <span className="th-label">Headroom</span>
                     <Tooltip text={COLUMN_HELP.headroom}>
@@ -198,17 +198,17 @@ export default async function StandingsPage({
                         </span>
                       </td>
                       <td
-                        className={`num ${sort === "current" ? "sorted" : ""}`}
-                      >
-                        {n(s.official_points)}
-                      </td>
-                      <td
                         className={`num ${sort === "ceiling" ? "sorted" : ""}`}
                       >
                         {n(s.ceiling_points)}
                       </td>
                       <td className="num behind">
                         {behind <= 0 ? "—" : pointsAsDuration(behind)}
+                      </td>
+                      <td
+                        className={`num ${sort === "current" ? "sorted" : ""}`}
+                      >
+                        {n(s.official_points)}
                       </td>
                       <td className="num">
                         <span
