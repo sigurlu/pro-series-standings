@@ -25,4 +25,11 @@ else:
 PY
 
 alembic upgrade head
+
+# A start command passed by the platform (e.g. a cron service running
+# `python -m app.cli scrape`) runs instead of the web server.
+if [ "$#" -gt 0 ]; then
+  exec "$@"
+fi
+
 exec uvicorn app.main:app --host "${HOST:-0.0.0.0}" --port "${PORT:-8000}"
