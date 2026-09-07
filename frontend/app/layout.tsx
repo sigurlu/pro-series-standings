@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Script from "next/script";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -7,6 +8,10 @@ export const metadata: Metadata = {
   description:
     "2026 IRONMAN Pro Series standings with each athlete's ceiling — the most points they could still finish the season with.",
 };
+
+// Runtime env var (no NEXT_PUBLIC_ prefix) so it's read per request on the
+// server and changing it only needs a restart, not a rebuild. Unset -> no GA.
+const GA_ID = process.env.GA_ID;
 
 const REPO_URL = "https://github.com/sigurlu/pro-series-standings";
 const AUTHOR = {
@@ -22,6 +27,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        {GA_ID?.startsWith("G-") && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga4" strategy="afterInteractive">
+              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');`}
+            </Script>
+          </>
+        )}
         <header className="site-header">
           <div className="inner">
             <Link href="/" className="brand">
