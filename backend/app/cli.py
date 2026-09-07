@@ -16,19 +16,23 @@ def main(argv: list[str] | None = None) -> int:
     scrape.add_argument("--pages-only", action="store_true")
     args = parser.parse_args(argv)
 
+    # Log to stdout — platforms (Railway, Docker, GCP…) tag anything on stderr
+    # as ERROR, which made every INFO line show up red.
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s %(levelname)s %(name)s: %(message)s",
         datefmt="%H:%M:%S",
+        stream=sys.stdout,
     )
+    # httpx logs one INFO line per request (~500 per scrape) — too noisy
+    logging.getLogger("httpx").setLevel(logging.WARNING)
 
     if args.command == "scrape":
         if args.season != 2026:
             parser.error("only season 2026 is supported")
-        print(
-            "WARNING: this command makes live requests to www.ironman.com "
-            "(rate limited to 1 req/sec).",
-            file=sys.stderr,
+        logging.getLogger("app.cli").warning(
+            "this command makes live requests to www.ironman.com "
+            "(rate limited to 1 req/sec)"
         )
         with SessionLocal() as db:
             athletes, races = run_scrape(db, pages_only=args.pages_only)
