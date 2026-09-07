@@ -3,7 +3,7 @@ import Link from "next/link";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "IRONMAN Pro Series Standings",
+  title: "Pro Series Standings",
   description:
     "2026 IRONMAN Pro Series standings with each athlete's ceiling — the most points they could still finish the season with.",
 };
@@ -25,7 +25,7 @@ export default function RootLayout({
         <header className="site-header">
           <div className="inner">
             <Link href="/" className="brand">
-              IRONMAN Pro Series Standings<span className="dot"> ·</span>
+              Pro Series Standings<span className="dot"> ·</span>
             </Link>
             <span className="season">2026</span>
           </div>

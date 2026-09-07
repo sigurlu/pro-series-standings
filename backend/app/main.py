@@ -25,7 +25,7 @@ from app.scrape.persist import (
     run_scrape,
 )
 
-app = FastAPI(title="IRONMAN Pro Series Standings")
+app = FastAPI(title="Pro Series Standings")
 
 app.add_middleware(
     CORSMiddleware,

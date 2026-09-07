@@ -1,4 +1,4 @@
-# IRONMAN Pro Series Standings
+# Pro Series Standings
 
 Scrapes the 2026 IRONMAN Pro Series standings, computes each athlete's **ceiling**
 (theoretical maximum points if they take full points in every remaining race they
