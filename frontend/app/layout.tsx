@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "2026 IRONMAN Pro Series standings with each athlete's ceiling — the most points they could still finish the season with.",
 };
 
-const REPO_URL = "https://github.com/sigurlu/ironman-pro-series-standings";
+const REPO_URL = "https://github.com/sigurlu/pro-series-standings";
 const AUTHOR = {
   name: "Sigurd Lund",
   url: "https://www.linkedin.com/in/sigurdlund/",
