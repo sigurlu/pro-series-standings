@@ -75,16 +75,29 @@ python -m venv .venv && .venv/bin/pip install -e .
 
 Scoring and parser tests need no Postgres and no network.
 
-## 5. Railway checklist (not executed here)
+## 5. Railway deploy
 
-- Add the Postgres plugin; note its connection URL.
-- Backend service built from `backend/Dockerfile`.
-- Frontend service built from `frontend/Dockerfile`.
-- Set env vars per `.env.example`: `DATABASE_URL` (from the plugin, with the
-  `postgresql+psycopg://` driver prefix), `FRONTEND_ORIGIN`, `SCRAPE_TOKEN`,
-  `API_URL`, `NEXT_PUBLIC_API_URL`.
-- Schedule a daily cron running `python -m app.cli scrape --season 2026` or an
-  authenticated `POST /api/scrape`.
+Deployed as four services in one project, all from this repo:
+
+| Service | Source | Notes |
+|---|---|---|
+| `Postgres` | Railway PostgreSQL | private-network only |
+| `backend` | `backend/` · Dockerfile | healthcheck `/health`, binds `$PORT` |
+| `frontend` | `frontend/` · Dockerfile | `next start`, public domain |
+| `scrape` | `backend/` · Dockerfile | cron `0 5 * * *`, start command `python -m app.cli scrape --season 2026` |
+
+- **Isolated monorepo**: each service sets a root directory (`backend` / `frontend`)
+  and a watch pattern so a push only redeploys the service it touched.
+- **backend / scrape vars**:
+  `DATABASE_URL=postgresql+psycopg://${{Postgres.PGUSER}}:${{Postgres.PGPASSWORD}}@${{Postgres.PGHOST}}:${{Postgres.PGPORT}}/${{Postgres.PGDATABASE}}`,
+  `PORT=8000`, `SCRAPE_TOKEN` (backend only), `FRONTEND_ORIGIN` = the frontend URL.
+- **frontend var**: `API_URL=http://${{backend.RAILWAY_PRIVATE_DOMAIN}}:8000`
+  (the browser never calls the API directly, so `NEXT_PUBLIC_API_URL` is unused).
+- Bind `0.0.0.0`, not `::` — Railway's healthcheck is IPv4.
+- First data load: the daily cron, or `railway ssh --service backend
+  "python -m app.cli scrape --season 2026"`. A one-off `POST /api/scrape` also
+  works but the HTTP call 502s at Railway's 5-minute edge timeout while the
+  scrape keeps running server-side.
 
 ## License
 
