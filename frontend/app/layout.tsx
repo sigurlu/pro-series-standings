@@ -3,10 +3,43 @@ import Link from "next/link";
 import Script from "next/script";
 import "./globals.css";
 
+const SITE_URL = "https://www.improseries.com";
+const SITE_DESCRIPTION =
+  "2026 IRONMAN Pro Series standings with each athlete's ceiling — the most points they could still finish the season with.";
+
 export const metadata: Metadata = {
-  title: "Pro Series Standings",
-  description:
-    "2026 IRONMAN Pro Series standings with each athlete's ceiling — the most points they could still finish the season with.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Pro Series Standings",
+    template: "%s · Pro Series Standings",
+  },
+  description: SITE_DESCRIPTION,
+  keywords: [
+    "IRONMAN Pro Series",
+    "IRONMAN Pro Series standings",
+    "triathlon standings 2026",
+    "IRONMAN 70.3 pro rankings",
+    "IRONMAN World Championship qualification",
+  ],
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "Pro Series Standings",
+    description: SITE_DESCRIPTION,
+    url: "/",
+    siteName: "Pro Series Standings",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Pro Series Standings",
+    description: SITE_DESCRIPTION,
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 // Runtime env var (no NEXT_PUBLIC_ prefix) so it's read per request on the

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { pointsAsDuration, serverApi, type Standing } from "../lib/api";
 import { Tooltip } from "./tooltip";
@@ -5,6 +6,38 @@ import { Tooltip } from "./tooltip";
 const n = (v: number) => v.toLocaleString("en-US");
 
 type Sort = "ceiling" | "current";
+
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{ gender?: string }>;
+}): Promise<Metadata> {
+  const { gender: genderParam } = await searchParams;
+  const gender = genderParam === "M" ? "M" : "W";
+  const label = gender === "M" ? "Men's" : "Women's";
+  const title = `${label} Standings`;
+  const description = `2026 IRONMAN Pro Series ${label.toLowerCase()} standings with each athlete's ceiling — the most points they could still finish the season with.`;
+  // Both genders live at "/" behind a query param, and every ?gender=M
+  // variant should canonicalize to the same URL as the default view — Next's
+  // URL resolver also collapses any query string once the pathname is
+  // exactly "/" (resolveAbsoluteUrlWithPathname), so a distinct canonical
+  // per gender isn't achievable here anyway.
+  const canonical = "https://www.improseries.com/";
+
+  return {
+    title,
+    description,
+    alternates: { canonical },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      siteName: "Pro Series Standings",
+      type: "website",
+    },
+    twitter: { card: "summary_large_image", title, description },
+  };
+}
 
 const COLUMN_HELP = {
   current:

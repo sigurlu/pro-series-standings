@@ -1,7 +1,49 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { serverApi, type AthleteDetail } from "../../../lib/api";
 
 const n = (v: number) => v.toLocaleString("en-US");
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+
+  let athlete: AthleteDetail | null = null;
+  try {
+    athlete = await serverApi<AthleteDetail>(
+      `/api/athletes/${slug}?season=2026`,
+    );
+  } catch {
+    athlete = null;
+  }
+
+  if (!athlete) {
+    return { title: "Athlete", robots: { index: false, follow: true } };
+  }
+
+  const title = athlete.name;
+  const description = `${athlete.name}'s 2026 IRONMAN Pro Series results: ${n(
+    athlete.current_points,
+  )} points so far, with a ceiling of ${n(athlete.ceiling_points)} points if they take full points in every remaining race they're eligible for.`;
+  const canonical = `/athletes/${slug}`;
+
+  return {
+    title,
+    description,
+    alternates: { canonical },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      siteName: "Pro Series Standings",
+      type: "website",
+    },
+    twitter: { card: "summary_large_image", title, description },
+  };
+}
 
 export default async function AthletePage({
   params,
