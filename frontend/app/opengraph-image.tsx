@@ -29,17 +29,17 @@ export default function OpengraphImage() {
             color: "#a5a8ff",
           }}
         >
-          IRONMAN Pro Series · 2026
+          2026 Season
         </div>
         <div
           style={{
             display: "flex",
-            fontSize: 88,
+            fontSize: 68,
             fontWeight: 700,
             marginTop: 20,
           }}
         >
-          Pro Series Standings
+          IRONMAN Pro Series Standings
         </div>
         <div style={{ display: "flex", fontSize: 32, marginTop: 24, color: "#9096a1" }}>
           Every athlete&rsquo;s ceiling — the most points they could still score

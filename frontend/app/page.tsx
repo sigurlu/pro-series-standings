@@ -14,15 +14,24 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { gender: genderParam } = await searchParams;
   const gender = genderParam === "M" ? "M" : "W";
-  const label = gender === "M" ? "Men's" : "Women's";
-  const title = `${label} Standings`;
-  const description = `2026 IRONMAN Pro Series ${label.toLowerCase()} standings with each athlete's ceiling — the most points they could still finish the season with.`;
   // Both genders live at "/" behind a query param, and every ?gender=M
   // variant should canonicalize to the same URL as the default view — Next's
   // URL resolver also collapses any query string once the pathname is
   // exactly "/" (resolveAbsoluteUrlWithPathname), so a distinct canonical
   // per gender isn't achievable here anyway.
   const canonical = "https://www.improseries.com/";
+
+  // The default (women's) view keeps the layout's title/description as-is —
+  // "IRONMAN Pro Series Standings" is the exact primary search phrase this
+  // page targets, so the root URL shouldn't override it with "Women's
+  // Standings". Only the men's view gets its own title/description.
+  if (gender === "W") {
+    return { alternates: { canonical } };
+  }
+
+  const title = "Men's Standings";
+  const description =
+    "2026 IRONMAN Pro Series men's standings with each athlete's ceiling — the most points they could still finish the season with.";
 
   return {
     title,
@@ -32,7 +41,7 @@ export async function generateMetadata({
       title,
       description,
       url: canonical,
-      siteName: "Pro Series Standings",
+      siteName: "IRONMAN Pro Series Standings",
       type: "website",
     },
     twitter: { card: "summary_large_image", title, description },
@@ -114,12 +123,13 @@ export default async function StandingsPage({
   return (
     <>
       <div className="page-head">
-        <h1>Ceiling standings</h1>
+        <h1>IRONMAN Pro Series Standings</h1>
         <p className="lede">
-          A projection of how the 2026 season could finish. Each athlete&rsquo;s{" "}
-          <em>ceiling</em> is the most points they could still score — full
-          points in every remaining race they&rsquo;re on the start list for,
-          keeping the best-five / max-three-IRONMAN rule.
+          Live 2026 IRONMAN Pro Series standings, ranked by each athlete&rsquo;s{" "}
+          <em>ceiling</em> — the most points they could still score. Ceiling
+          assumes full points in every remaining race they&rsquo;re on the
+          start list for, including the IRONMAN World Championship, keeping
+          the Pro Series&rsquo; best-five / max-three-IRONMAN scoring rule.
         </p>
       </div>
 

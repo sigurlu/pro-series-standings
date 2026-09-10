@@ -38,7 +38,7 @@ export async function generateMetadata({
       title,
       description,
       url: canonical,
-      siteName: "Pro Series Standings",
+      siteName: "IRONMAN Pro Series Standings",
       type: "website",
     },
     twitter: { card: "summary_large_image", title, description },
