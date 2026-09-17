@@ -1,5 +1,7 @@
 # IRONMAN Pro Series Standings
 
+Live at **[www.improseries.com](https://www.improseries.com)**.
+
 Scrapes the 2026 IRONMAN Pro Series standings, computes each athlete's **ceiling**
 (theoretical maximum points if they take full points in every remaining race they
 are eligible for — best five results, at most three full IRONMAN), and serves a
