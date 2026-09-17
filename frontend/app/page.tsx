@@ -7,6 +7,29 @@ const n = (v: number) => v.toLocaleString("en-US");
 
 type Sort = "ceiling" | "current";
 
+const FAQ = [
+  {
+    q: "What is the IRONMAN Pro Series?",
+    a: "The IRONMAN Pro Series — also called the IM Pro Series — is a season-long ranking for professional triathletes. Points are awarded across a set of IRONMAN and IRONMAN 70.3 races each year, with the top finishers earning a share of IRONMAN's Pro Series bonus pool.",
+  },
+  {
+    q: "How are Pro Series points scored?",
+    a: "Each athlete's total counts their best five results from the season, with at most three of those coming from full-distance IRONMAN races. Results beyond that best-five / max-three-IRONMAN limit don't count toward the total.",
+  },
+  {
+    q: 'What does "ceiling" mean on this site?',
+    a: "Ceiling is the most points an athlete could still finish the season with — assuming they take full points in every remaining race they're on the published start list for, still capped at best five results and three full IRONMAN races. It's a projection, not an official IRONMAN number.",
+  },
+  {
+    q: 'What’s "headroom"?',
+    a: "Headroom is ceiling minus current points — how many points are still realistically on the table for that athlete before the season ends.",
+  },
+  {
+    q: "Where does the data come from?",
+    a: "Standings and results are scraped directly from ironman.com and refreshed daily. This site isn't affiliated with, authorized, or endorsed by The IRONMAN Group.",
+  },
+] as const;
+
 export async function generateMetadata({
   searchParams,
 }: {
@@ -287,6 +310,31 @@ export default async function StandingsPage({
         five results and at most three full IRONMAN races, and only adds
         a remaining race once the athlete appears on its published pro start list.
       </p>
+
+      <section className="faq" aria-labelledby="faq-heading">
+        <h2 id="faq-heading">Frequently asked questions</h2>
+        {FAQ.map(({ q, a }) => (
+          <details key={q}>
+            <summary>{q}</summary>
+            <p>{a}</p>
+          </details>
+        ))}
+      </section>
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: FAQ.map(({ q, a }) => ({
+              "@type": "Question",
+              name: q,
+              acceptedAnswer: { "@type": "Answer", text: a },
+            })),
+          }),
+        }}
+      />
     </>
   );
 }

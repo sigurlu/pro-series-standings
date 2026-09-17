@@ -499,6 +499,54 @@ td.behind {
   line-height: 1.55;
 }
 
+.faq {
+  margin: 2.5rem 0 0;
+  max-width: 62ch;
+}
+
+.faq h2 {
+  font-size: 1.05rem;
+  margin: 0 0 0.75rem;
+}
+
+.faq details {
+  border-top: 1px solid var(--border);
+  padding: 0.85rem 0;
+}
+
+.faq details:last-of-type {
+  border-bottom: 1px solid var(--border);
+}
+
+.faq summary {
+  cursor: pointer;
+  font-weight: 550;
+  font-size: 0.92rem;
+  list-style: none;
+}
+
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq summary::before {
+  content: "+";
+  display: inline-block;
+  width: 1.1em;
+  color: var(--text-subtle);
+}
+
+.faq details[open] summary::before {
+  content: "–";
+}
+
+.faq p {
+  margin: 0.6rem 0 0 1.1em;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
 .empty {
   margin: 0;
   padding: 3.5rem 1.5rem;
